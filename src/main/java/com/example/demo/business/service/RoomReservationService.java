@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RoomReservationService {
@@ -28,16 +27,25 @@ public class RoomReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<RoomReservation> getRoomReservationForDate(Date date) {
+    public List<RoomReservation> getRoomReservation(Date date) {
+        Iterable<Reservation> reservations;
+        if (date == null) {
+            reservations = this.reservationRepository.findAll();
+        } else {
+            reservations = this.reservationRepository.findReservationByResDate(new java.sql.Date(date.getTime()));
+        }
+        return loadRoomReservationDetails(reservations);
+    }
+
+    private List<RoomReservation> loadRoomReservationDetails(Iterable<Reservation> reservations) {
         List<RoomReservation> roomReservations = new ArrayList<>();
-        Iterable<Reservation> reservations = this.reservationRepository.findReservationByResDate(new java.sql.Date(date.getTime()));
         for (Reservation reservation : reservations) {
             RoomReservation roomReservation = new RoomReservation();
             Room room = this.roomRepository.findById(reservation.getRoomId()).get();
             roomReservation.setRoomName(room.getName());
             roomReservation.setRoomNumber(room.getRoomNumber());
             roomReservation.setRoomId(room.getRoomId());
-            roomReservation.setDate(date);
+            roomReservation.setDate(reservation.getResDate());
 
             Guest guest = this.guestRepository.findById(reservation.getGuestId()).get();
             roomReservation.setGuestId(guest.getGuestId());

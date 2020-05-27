@@ -16,8 +16,6 @@ public class DateUtils {
             } catch (ParseException e) {
                 date = new Date();
             }
-        } else {
-            date = new Date();
         }
         return date;
     }

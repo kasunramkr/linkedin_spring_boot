@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/reservations")
+@RequestMapping("reservations")
 public class RoomReservationWebServiceController {
     private final RoomReservationService roomReservationService;
 
@@ -24,6 +24,6 @@ public class RoomReservationWebServiceController {
     @GetMapping
     public List<RoomReservation> getRoomReservations(@RequestParam(name = "date", required = false) String dateString) {
         Date date = DateUtils.createDateFromDateString(dateString);
-        return roomReservationService.getRoomReservationForDate(date);
+        return roomReservationService.getRoomReservation(date);
     }
 }
