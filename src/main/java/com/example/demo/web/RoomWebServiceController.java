@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("room")
+@RequestMapping("/room")
 public class RoomWebServiceController {
     private final RoomService roomService;
 
@@ -18,12 +18,22 @@ public class RoomWebServiceController {
     }
 
     @GetMapping
-    public List<Room> getRoomReservations(@RequestParam(name = "roomNumber", required = false) String roomNumber) {
+    public List<Room> getRoom(@RequestParam(name = "roomNumber", required = false) String roomNumber) {
         return roomService.getRoom(roomNumber);
     }
 
     @DeleteMapping
-    public String deleteRoomReservations(@RequestParam(name = "roomNumber") String roomNumber) {
+    public String deleteRoom(@RequestParam(name = "roomNumber") String roomNumber) {
         return roomService.deleteRoom(roomNumber);
+    }
+
+//    @PostMapping(consumes = "application/json", produces = "application/json")
+//    public Room addRoom(@RequestBody Room room) {
+//        return roomService.addRoom(room);
+//    }
+
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    public Room addRoom(@RequestBody Room room) {
+        return roomService.updateRoom(room);
     }
 }

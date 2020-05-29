@@ -32,6 +32,10 @@ public class RoomService {
         if (room == null) {
             return "Room Not found";
         }
+        else if(!room.iterator().hasNext())
+        {
+            return "Room Not found";
+        }
         else
         {
             this.roomRepository.delete( room.iterator().next());
@@ -39,4 +43,34 @@ public class RoomService {
         }
     }
 
+    public Room addRoom(Room room) {
+        if (room == null) {
+            return null;
+        } else {
+            Iterable<Room> existingRoom = this.roomRepository.findRoomByRoomNumber(room.getRoomNumber());
+            if (existingRoom.iterator().hasNext()) {
+                return null;
+            } else {
+                this.roomRepository.save(room);
+            }
+        }
+        return room;
     }
+
+    public Room updateRoom(Room room) {
+        if (room == null) {
+            return null;
+        } else {
+            Iterable<Room> existingRoom = this.roomRepository.findRoomByRoomNumber(room.getRoomNumber());
+            if (!existingRoom.iterator().hasNext()) {
+                return null;
+            } else {
+                Room next = existingRoom.iterator().next();
+                next.setBedInfo(room.getBedInfo());
+                next.setName(room.getName());
+                this.roomRepository.save(next);
+                return next;
+            }
+        }
+    }
+}
