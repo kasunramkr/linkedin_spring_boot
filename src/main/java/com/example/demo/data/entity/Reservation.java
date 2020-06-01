@@ -1,9 +1,14 @@
 package com.example.demo.data.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Getter
+@Setter
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,36 +23,4 @@ public class Reservation {
 
     @Column(name = "RES_DATE")
     private Date resDate;
-
-    public long getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(long reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public long getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
-    }
-
-    public long getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(long guestId) {
-        this.guestId = guestId;
-    }
-
-    public Date getResDate() {
-        return resDate;
-    }
-
-    public void setResDate(Date resDate) {
-        this.resDate = resDate;
-    }
 }
