@@ -27,13 +27,13 @@ public class RoomWebServiceController {
         return roomService.deleteRoom(roomNumber);
     }
 
-//    @PostMapping(consumes = "application/json", produces = "application/json")
-//    public Room addRoom(@RequestBody Room room) {
-//        return roomService.addRoom(room);
-//    }
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public Room addRoom(@RequestBody Room room) {
+        return roomService.addRoom(room);
+    }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public Room addRoom(@RequestBody Room room) {
+    public Room updateRoom(@RequestBody Room room) {
         return roomService.updateRoom(room);
     }
 }
